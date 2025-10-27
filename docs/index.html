@@ -31,6 +31,40 @@
         <summary>Anteprima (clicca per espandere)</summary>
         <pre id="preview"></pre>
       </details>
+
+      <h3>🔍 Come verificare il corretto funzionamento</h3>
+      <ol>
+        <li>
+          <strong>Deploy su Hetzner</strong>: crea un nuovo server (Debian 12 o 13) e incolla il contenuto del file in <em>User Data</em>.
+        </li>
+        <li>
+          Attendi 3-5 minuti, poi connettiti via SSH:
+          <pre>ssh root@<IP_DEL_SERVER></pre>
+        </li>
+        <li>
+          Verifica lo stato di cloud-init:
+          <pre>cloud-init status --wait</pre>
+          <p>Lo stato deve essere <code>done</code> (non <code>error</code> o <code>degraded</code>).</p>
+        </li>
+        <li>
+          Controlla che i container siano attivi:
+          <pre>podman ps</pre>
+          <p>Dovresti vedere <code>traefik</code> e <code>coolify</code>.</p>
+        </li>
+        <li>
+          Apri nel browser:
+          <ul>
+            <li><a href="https://${domain}" target="_blank">https://${domain}</a> → dashboard di Coolify</li>
+            <li><a href="https://traefik.${domain}" target="_blank">https://traefik.${domain}</a> → dashboard di Traefik (se raggiungibile)</li>
+          </ul>
+        </li>
+        <li>
+          <strong>Problemi?</strong> Controlla i log:
+          <pre>podman logs coolify</pre>
+          <pre>podman logs traefik</pre>
+        </li>
+      </ol>
+      <p>ℹ️ Il certificato HTTPS potrebbe richiedere 1-2 minuti per essere rilasciato da Let’s Encrypt.</p>
     </div>
   </div>
 
