@@ -2,7 +2,7 @@
 
 Questo è un generatore interattivo **client-side** per creare file `cloud-init` personalizzati. Ti permette di deployare facilmente **Coolify** e **Traefik v2** su un VPS Hetzner, utilizzando **Podman Compose** per un'orchestratazione leggera e moderna.
 
-➡️ **Provalo online**: `https://<tuo-username>.github.io/coolify-cloudinit-generator/`
+➡️ **Provalo online**: `https://aliennatione.github.io/coolify-cloudinit-generator/`
 
 ## ✨ Caratteristiche Principali
 
