@@ -5,9 +5,6 @@ document.getElementById('configForm').addEventListener('submit', function (e) {
   const email = document.getElementById('email').value.trim();
   const sshKey = document.getElementById('sshKey').value.trim();
 
-  // Escape per contenuti YAML: sostituisce caratteri problematici (raro, ma sicuro)
-  const escapeYamlString = (str) => str.replace(/\\/g, '\\\\').replace(/"/g, '\\"');
-
   // Contenuti dei file
   const envContent = `DOMAIN=${domain}\nLETSENCRYPT_EMAIL=${email}`;
   const middlewaresContent = `http:
@@ -85,7 +82,7 @@ services:
     restart: unless-stopped
     volumes:
       - /var/run/podman/podman.sock:/var/run/docker.sock
-      - coolify_/app/data
+      - /opt/coolify-traefik//app/data
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.coolify.rule=Host(\`${domain}\`)"
@@ -94,10 +91,7 @@ services:
       - "traefik.http.routers.coolify.middlewares=secure-headers"
       - "traefik.http.services.coolify.loadbalancer.server.port=3000"
     depends_on:
-      - traefik
-
-volumes:
-  coolify_`;
+      - traefik`;
 
   // Costruisci cloud-init con write_files
   let cloudInit = `#cloud-config
@@ -141,6 +135,7 @@ ${middlewaresContent.split('\n').map(line => '      ' + line).join('\n')}
 
 runcmd:
   - mkdir -p /opt/coolify-traefik/compose/traefik
+  - mkdir -p /opt/coolify-traefik/data
   - touch /opt/coolify-traefik/compose/acme.json
   - chmod 600 /opt/coolify-traefik/compose/acme.json
   - ufw allow 22/tcp
