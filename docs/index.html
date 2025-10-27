@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Generatore Cloud-Init per Coolify (Podman)</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="container">
+    <h1>☁️ Generatore Cloud-Init per Coolify</h1>
+    <p>Deploya Coolify + Traefik su Hetzner con <strong>Podman Compose</strong> e HTTPS automatico.</p>
+
+    <form id="configForm">
+      <label for="domain">Dominio (es. coolify.tuodominio.duckdns.org)</label>
+      <input type="text" id="domain" name="domain" required placeholder="coolify.example.duckdns.org" />
+
+      <label for="email">Email per Let’s Encrypt</label>
+      <input type="email" id="email" name="email" required placeholder="tuamail@example.com" />
+
+      <label for="sshKey">Chiave SSH pubblica (opzionale, per accesso sicuro)</label>
+      <textarea id="sshKey" name="sshKey" placeholder="ssh-ed25519 AAAAC3..."></textarea>
+
+      <button type="submit">Genera cloud-init.yaml</button>
+    </form>
+
+    <div id="output" style="display:none;">
+      <h2>✅ File generato!</h2>
+      <p>Clicca qui per <a id="downloadLink" href="#">scaricare</a> il tuo <code>cloud-init.yaml</code>.</p>
+      <details>
+        <summary>Anteprima (clicca per espandere)</summary>
+        <pre id="preview"></pre>
+      </details>
+    </div>
+  </div>
+
+  <script src="generate.js"></script>
+</body>
+</html>
